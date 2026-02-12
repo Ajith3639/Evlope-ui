@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'motion/react';
 import { useNavigate, useLocation } from 'react-router';
 import {
   ArrowLeft,
@@ -77,11 +76,7 @@ export default function PreviewPage() {
       <AnimatedBackground />
       
       {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="bg-white/80 backdrop-blur-sm border-b border-purple-100 px-6 py-4 sticky top-0 z-20"
-      >
+      <div className="bg-white/80 backdrop-blur-sm border-b border-purple-100 px-6 py-4 sticky top-0 z-20 animate-fade-in-down">
         <div className="container mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Button
@@ -124,11 +119,7 @@ export default function PreviewPage() {
                 Share
               </Button>
               {showShareMenu && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9, y: -10 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  className="absolute right-0 mt-2 bg-white rounded-2xl shadow-2xl p-3 w-48 border border-purple-100"
-                >
+                <div className="absolute right-0 mt-2 bg-white rounded-2xl shadow-2xl p-3 w-48 border border-purple-100 animate-scale-in">
                   <button
                     onClick={() => handleShare('Email')}
                     className="w-full text-left px-4 py-2 rounded-xl hover:bg-purple-50 transition-colors"
@@ -156,21 +147,17 @@ export default function PreviewPage() {
                   >
                     Copy Link
                   </button>
-                </motion.div>
+                </div>
               )}
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
 
       <div className="container mx-auto px-6 py-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Preview */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="space-y-6"
-          >
+          <div className="space-y-6 animate-fade-in-up">
             <div>
               <h3 className="text-lg font-semibold mb-4">Your Invite</h3>
               <InviteCard
@@ -178,14 +165,10 @@ export default function PreviewPage() {
                 copyVariant={invite.copyVariant}
               />
             </div>
-          </motion.div>
+          </div>
 
           {/* Smart Features Panel */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="space-y-6"
-          >
+          <div className="space-y-6 animate-fade-in-up delay-200">
             {/* RSVP Tracking */}
             <div className="bg-white rounded-3xl p-6 shadow-lg">
               <div className="flex items-center gap-3 mb-4">
@@ -331,7 +314,7 @@ export default function PreviewPage() {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </div>

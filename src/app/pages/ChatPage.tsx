@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
 import { useNavigate } from 'react-router';
 import { Send, Sparkles, X, ArrowLeft, ChevronLeft, ChevronRight, Download, Save, Share2 } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
@@ -198,11 +197,7 @@ export default function ChatPage() {
       <AnimatedBackground />
 
       {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="bg-white/80 backdrop-blur-sm border-b border-purple-100 px-6 py-4 relative z-10"
-      >
+      <div className="bg-white/80 backdrop-blur-sm border-b border-purple-100 px-6 py-4 relative z-10 animate-fade-in-down">
         <div className="container mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Button
@@ -229,20 +224,16 @@ export default function ChatPage() {
             <MoodSlider value={mood} onChange={setMood} />
           </div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Chat Messages */}
       <div className="flex-1 overflow-y-auto px-6 py-8 relative z-10">
         <div className="container mx-auto max-w-4xl">
-          <AnimatePresence>
-            {messages.map((message) => (
-              <motion.div
-                key={message.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                className={`mb-6 ${message.sender === 'user' ? 'flex justify-end' : ''}`}
-              >
+          {messages.map((message) => (
+            <div
+              key={message.id}
+              className={`mb-6 animate-fade-in-up ${message.sender === 'user' ? 'flex justify-end' : ''}`}
+            >
                 {message.sender === 'user' ? (
                   <div className="max-w-[80%] rounded-3xl px-6 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white">
                     <p>{message.text}</p>
@@ -261,24 +252,18 @@ export default function ChatPage() {
 
                     {/* Invite Carousel */}
                     {message.inviteVersions && (
-                      <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 0.3 }}
-                        className="mt-6"
-                      >
+                      <div className="mt-6 animate-scale-in delay-300">
                         <InviteCardCarousel
                           invites={message.inviteVersions}
                           onExport={handleExport}
                           language={language}
                         />
-                      </motion.div>
+                      </div>
                     )}
                   </div>
                 )}
-              </motion.div>
+              </div>
             ))}
-          </AnimatePresence>
           <div ref={messagesEndRef} />
         </div>
       </div>
@@ -311,22 +296,15 @@ export default function ChatPage() {
       </div>
 
       {/* Event Details Modal */}
-      <AnimatePresence>
-        {showModal && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-6"
-            onClick={() => setShowModal(false)}
+      {showModal && (
+        <div
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-6 animate-fade-in"
+          onClick={() => setShowModal(false)}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="bg-white rounded-3xl p-8 max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl animate-scale-in"
           >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
-              className="bg-white rounded-3xl p-8 max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl"
-            >
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
@@ -441,10 +419,9 @@ export default function ChatPage() {
                   Generate Invites
                 </Button>
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         )}
-      </AnimatePresence>
     </div>
   );
 }

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
 import { ChevronLeft, ChevronRight, Download, Save, Share2, Sparkles } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { InviteData } from '@/app/context/AppContext';
@@ -31,24 +30,6 @@ export default function InviteCardCarousel({ invites, onExport, language }: Invi
   };
 
   const currentInvite = invites[currentIndex];
-
-  const variants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? 300 : -300,
-      opacity: 0,
-      scale: 0.9,
-    }),
-    center: {
-      x: 0,
-      opacity: 1,
-      scale: 1,
-    },
-    exit: (direction: number) => ({
-      x: direction > 0 ? -300 : 300,
-      opacity: 0,
-      scale: 0.9,
-    }),
-  };
 
   return (
     <div className="relative">
@@ -101,27 +82,17 @@ export default function InviteCardCarousel({ invites, onExport, language }: Invi
 
         {/* Card Display */}
         <div className="flex justify-center items-center min-h-[600px] overflow-hidden">
-          <AnimatePresence initial={false} custom={direction} mode="wait">
-            <motion.div
-              key={currentIndex}
-              custom={direction}
-              variants={variants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{
-                x: { type: 'spring', stiffness: 300, damping: 30 },
-                opacity: { duration: 0.2 },
-                scale: { duration: 0.2 },
-              }}
-              className="w-full flex justify-center"
-            >
-              <InviteCard
-                invite={currentInvite}
-                copyVariant={currentInvite.copyVariant}
-              />
-            </motion.div>
-          </AnimatePresence>
+          <div 
+            key={currentIndex}
+            className={`w-full flex justify-center transition-all duration-300 ${
+              direction > 0 ? 'animate-slide-in-right' : direction < 0 ? 'animate-slide-in-left' : 'animate-scale-in'
+            }`}
+          >
+            <InviteCard
+              invite={currentInvite}
+              copyVariant={currentInvite.copyVariant}
+            />
+          </div>
         </div>
 
         {/* Dots Indicator */}
@@ -144,12 +115,7 @@ export default function InviteCardCarousel({ invites, onExport, language }: Invi
       </div>
 
       {/* Action Buttons */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}
-        className="mt-6 flex flex-wrap gap-3 justify-center"
-      >
+      <div className="mt-6 flex flex-wrap gap-3 justify-center animate-fade-in-up delay-500">
         <Button
           onClick={() => onExport(currentInvite)}
           size="lg"
@@ -167,19 +133,14 @@ export default function InviteCardCarousel({ invites, onExport, language }: Invi
           <Share2 className="w-5 h-5 mr-2" />
           Share
         </Button>
-      </motion.div>
+      </div>
 
       {/* Info Text */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.7 }}
-        className="mt-6 text-center"
-      >
+      <div className="mt-6 text-center animate-fade-in delay-700">
         <p className="text-sm text-gray-600">
           💡 Export your favorite version to access RSVP tracking, smart reminders, and more features!
         </p>
-      </motion.div>
+      </div>
     </div>
   );
 }

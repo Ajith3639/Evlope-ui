@@ -1,4 +1,3 @@
-import { motion } from 'motion/react';
 import { useNavigate } from 'react-router';
 import { Sparkles, MessageSquare, Bell, Share2, Wand2 } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
@@ -38,11 +37,7 @@ export default function LandingPage() {
     <div className="min-h-screen relative">
       <AnimatedBackground />
       {/* Header */}
-      <motion.header
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="container mx-auto px-6 py-6 flex justify-between items-center"
-      >
+      <header className="container mx-auto px-6 py-6 flex justify-between items-center animate-fade-in-down">
         <div className="flex items-center gap-2">
           <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
             <Sparkles className="w-6 h-6 text-white" />
@@ -58,31 +53,16 @@ export default function LandingPage() {
         >
           My Library
         </Button>
-      </motion.header>
+      </header>
 
       {/* Hero Section */}
       <div className="container mx-auto px-6 py-20 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="mb-8"
-        >
-          <motion.div
-            animate={{ 
-              scale: [1, 1.05, 1],
-            }}
-            transition={{ 
-              duration: 3,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-            className="inline-block mb-6"
-          >
+        <div className="mb-8 animate-fade-in-up delay-200">
+          <div className="inline-block mb-6 animate-pulse-slow">
             <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 flex items-center justify-center shadow-2xl shadow-purple-500/30">
               <Sparkles className="w-12 h-12 text-white" />
             </div>
-          </motion.div>
+          </div>
           
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
             <span className="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
@@ -97,10 +77,7 @@ export default function LandingPage() {
             Smart reminders, easy RSVP tracking, and instant sharing—all in one magical experience.
           </p>
 
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
+          <div className="hover-scale">
             <Button
               size="lg"
               onClick={() => navigate('/chat')}
@@ -109,24 +86,15 @@ export default function LandingPage() {
               <Sparkles className="w-5 h-5 mr-2" />
               Create Your Invite
             </Button>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
         {/* Feature Cards */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-24 max-w-6xl mx-auto"
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-24 max-w-6xl mx-auto animate-fade-in-up delay-400">
           {features.map((feature, index) => (
-            <motion.div
+            <div
               key={feature.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 + index * 0.1 }}
-              whileHover={{ y: -8 }}
-              className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all"
+              className={`bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all hover-lift animate-fade-in-up ${index === 0 ? 'delay-500' : index === 1 ? 'delay-600' : index === 2 ? 'delay-700' : 'delay-800'}`}
             >
               <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-4`}>
                 <feature.icon className="w-7 h-7 text-white" />
@@ -137,9 +105,9 @@ export default function LandingPage() {
               <p className="text-sm text-gray-600">
                 {feature.description}
               </p>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
 
         {/* Footer removed - AnimatedBackground handles decorative elements */}
       </div>

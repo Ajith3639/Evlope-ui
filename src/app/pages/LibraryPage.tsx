@@ -1,4 +1,3 @@
-import { motion, AnimatePresence } from 'motion/react';
 import { useNavigate } from 'react-router';
 import { ArrowLeft, Plus, Sparkles, Copy, Trash2, Share2, Edit, Film, Image as ImageIcon } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
@@ -39,11 +38,7 @@ export default function LibraryPage() {
     <div className="min-h-screen relative">
       <AnimatedBackground />
       {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="bg-white/80 backdrop-blur-sm border-b border-purple-100 px-6 py-4 sticky top-0 z-10"
-      >
+      <div className="bg-white/80 backdrop-blur-sm border-b border-purple-100 px-6 py-4 sticky top-0 z-10 animate-fade-in-down">
         <div className="container mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Button
@@ -73,29 +68,15 @@ export default function LibraryPage() {
             Create New
           </Button>
         </div>
-      </motion.div>
+      </div>
 
       <div className="container mx-auto px-6 py-8">
         {invites.length === 0 ? (
           /* Empty State */
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="flex flex-col items-center justify-center py-20"
-          >
-            <motion.div
-              animate={{
-                y: [0, -10, 0],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-              className="w-32 h-32 rounded-full bg-gradient-to-br from-purple-200 via-pink-200 to-blue-200 flex items-center justify-center mb-6"
-            >
+          <div className="flex flex-col items-center justify-center py-20 animate-scale-in">
+            <div className="w-32 h-32 rounded-full bg-gradient-to-br from-purple-200 via-pink-200 to-blue-200 flex items-center justify-center mb-6 animate-float">
               <Sparkles className="w-16 h-16 text-purple-500" />
-            </motion.div>
+            </div>
             <h3 className="text-2xl font-semibold text-gray-800 mb-2">No Invites Yet</h3>
             <p className="text-gray-600 mb-8 text-center max-w-md">
               Start creating beautiful invitations with AI. Your saved designs will appear here.
@@ -108,21 +89,15 @@ export default function LibraryPage() {
               <Plus className="w-5 h-5 mr-2" />
               Create Your First Invite
             </Button>
-          </motion.div>
+          </div>
         ) : (
           /* Grid of Invites */
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            <AnimatePresence>
-              {invites.map((invite, index) => (
-                <motion.div
-                  key={invite.id}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ delay: index * 0.1 }}
-                  whileHover={{ y: -8 }}
-                  className="group relative bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all overflow-hidden"
-                >
+            {invites.map((invite, index) => (
+              <div
+                key={invite.id}
+                className={`group relative bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all overflow-hidden hover-lift animate-scale-in ${index === 0 ? '' : `delay-${Math.min(index * 100, 700)}`}`}
+              >
                   {/* Thumbnail */}
                   <div className="relative aspect-[2/3] bg-gradient-to-br from-purple-100 via-pink-100 to-blue-100 p-6">
                     {/* Mini preview */}
@@ -155,11 +130,7 @@ export default function LibraryPage() {
                     </div>
 
                     {/* Hover Actions */}
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      whileHover={{ opacity: 1 }}
-                      className="absolute inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity"
-                    >
+                    <div className="absolute inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                       <Button
                         size="icon"
                         onClick={() => handleEdit(invite)}
@@ -192,7 +163,7 @@ export default function LibraryPage() {
                       >
                         <Trash2 className="w-4 h-4" />
                       </Button>
-                    </motion.div>
+                    </div>
                   </div>
 
                   {/* Footer */}
@@ -201,9 +172,8 @@ export default function LibraryPage() {
                       Created {new Date(invite.createdAt).toLocaleDateString()}
                     </p>
                   </div>
-                </motion.div>
+                </div>
               ))}
-            </AnimatePresence>
           </div>
         )}
       </div>

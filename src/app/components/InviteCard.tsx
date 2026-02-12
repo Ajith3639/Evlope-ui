@@ -1,4 +1,3 @@
-import { motion } from 'motion/react';
 import { Calendar, MapPin, Clock, Sparkles } from 'lucide-react';
 import { InviteData } from '@/app/context/AppContext';
 import { Button } from '@/app/components/ui/button';
@@ -129,12 +128,9 @@ export default function InviteCard({ invite, copyVariant = 'formal', customColor
   const rsvpText = lang.rsvp[variant as keyof typeof lang.rsvp] || lang.rsvp.formal;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      whileHover={onClick ? { scale: 1.02 } : {}}
+    <div
       onClick={onClick}
-      className={`relative bg-white rounded-3xl shadow-2xl overflow-hidden ${onClick ? 'cursor-pointer' : ''}`}
+      className={`relative bg-white rounded-3xl shadow-2xl overflow-hidden transition-all animate-scale-in ${onClick ? 'cursor-pointer hover-scale' : ''}`}
       style={{ aspectRatio: '2/3', maxWidth: '400px' }}
     >
       {/* Background Pattern */}
@@ -149,30 +145,17 @@ export default function InviteCard({ invite, copyVariant = 'formal', customColor
       <div className={`h-3 bg-gradient-to-r ${gradient}`} />
 
       {invite.animated && (
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            rotate: [0, 180, 360],
-          }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-          className="absolute top-8 right-8 z-10"
-        >
-          <Sparkles className="w-8 h-8 text-purple-400 opacity-60" />
-        </motion.div>
+        <div className="absolute top-8 right-8 z-10 animate-pulse-slow">
+          <div className="animate-rotate">
+            <Sparkles className="w-8 h-8 text-purple-400 opacity-60" />
+          </div>
+        </div>
       )}
 
       <div className="p-8 flex flex-col h-full relative z-10">
         {/* Header */}
         <div className="text-center mb-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-          >
+          <div className="animate-fade-in-up delay-200">
             <p className="text-sm text-gray-500 mb-2 uppercase tracking-wider">{title}</p>
             <h2 className="text-3xl font-bold mb-2" style={{ color: customColor || '#8b5cf6' }}>
               {invite.eventName}
@@ -180,16 +163,11 @@ export default function InviteCard({ invite, copyVariant = 'formal', customColor
             {invite.theme && (
               <p className="text-gray-600 italic">{invite.theme}</p>
             )}
-          </motion.div>
+          </div>
         </div>
 
         {/* Details */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          className="space-y-4 flex-1"
-        >
+        <div className="space-y-4 flex-1 animate-fade-in delay-400">
           <div className="flex items-start gap-3">
             <div className={`w-10 h-10 rounded-2xl bg-gradient-to-br ${gradient} flex items-center justify-center flex-shrink-0`}>
               <Calendar className="w-5 h-5 text-white" />
@@ -234,15 +212,10 @@ export default function InviteCard({ invite, copyVariant = 'formal', customColor
               <p className="text-sm text-gray-700 italic">"{invite.description}"</p>
             </div>
           )}
-        </motion.div>
+        </div>
 
         {/* CTA Button */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          className="mt-8 space-y-3"
-        >
+        <div className="mt-8 space-y-3 animate-fade-in-up delay-600">
           <Button
             className={`w-full rounded-2xl bg-gradient-to-r ${gradient} hover:opacity-90 text-white h-12`}
           >
@@ -255,13 +228,13 @@ export default function InviteCard({ invite, copyVariant = 'formal', customColor
             <Calendar className="w-4 h-4 mr-2" />
             {lang.addToCalendar}
           </Button>
-        </motion.div>
+        </div>
 
         {/* Footer */}
         <div className="mt-6 text-center text-xs text-gray-400">
           <p>{lang.createdWith}</p>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }

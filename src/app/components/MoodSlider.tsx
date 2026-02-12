@@ -1,4 +1,3 @@
-import { motion } from 'motion/react';
 import { MoodType } from '@/app/context/AppContext';
 
 interface MoodSliderProps {
@@ -38,13 +37,10 @@ export default function MoodSlider({ value, onChange }: MoodSliderProps) {
                     : 'bg-gray-200'
                 }`}
               />
-              <motion.div
-                initial={false}
-                animate={{
-                  scale: index === currentIndex ? 1 : 0,
-                  opacity: index === currentIndex ? 1 : 0,
-                }}
-                className={`absolute -top-1 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-gradient-to-r ${mood.color} shadow-lg`}
+              <div
+                className={`absolute -top-1 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-gradient-to-r ${mood.color} shadow-lg transition-all ${
+                  index === currentIndex ? 'scale-100 opacity-100' : 'scale-0 opacity-0'
+                }`}
               />
               <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
                 {mood.label}
