@@ -6,7 +6,6 @@ import {
   Share2,
   Save,
   Calendar,
-  MapPin,
   Users,
   Bell,
   Mail,
@@ -15,7 +14,6 @@ import {
 } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { Input } from '@/app/components/ui/input';
-import { Label } from '@/app/components/ui/label';
 import { useApp, InviteData } from '@/app/context/AppContext';
 import InviteCard from '@/app/components/InviteCard';
 import ReminderSetup from '@/app/components/ReminderSetup';

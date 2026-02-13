@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import { Send, Sparkles, X, ArrowLeft, ChevronLeft, ChevronRight, Download, Save, Share2 } from 'lucide-react';
+import { Send, Sparkles, X, ArrowLeft } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { Input } from '@/app/components/ui/input';
 import { Label } from '@/app/components/ui/label';
@@ -13,7 +13,6 @@ import {
   SelectValue,
 } from '@/app/components/ui/select';
 import { useApp, InviteData, MoodType } from '@/app/context/AppContext';
-import MoodSlider from '@/app/components/MoodSlider';
 import AnimatedBackground from '@/app/components/AnimatedBackground';
 import InviteCardCarousel from '@/app/components/InviteCardCarousel';
 import { toast } from 'sonner';
@@ -219,10 +218,7 @@ export default function ChatPage() {
             </div>
           </div>
 
-          {/* Mood Slider in Header */}
-          <div className="hidden md:block w-80">
-            <MoodSlider value={mood} onChange={setMood} />
-          </div>
+      
         </div>
       </div>
 
@@ -268,11 +264,7 @@ export default function ChatPage() {
         </div>
       </div>
 
-      {/* Mood Slider Mobile */}
-      <div className="md:hidden px-6 py-3 bg-white/80 backdrop-blur-sm border-t border-purple-100 relative z-10">
-        <MoodSlider value={mood} onChange={setMood} />
-      </div>
-
+  
       {/* Input Area */}
       <div className="bg-white/80 backdrop-blur-sm border-t border-purple-100 px-6 py-4 relative z-10">
         <div className="container mx-auto max-w-4xl">

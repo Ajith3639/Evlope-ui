@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ChevronLeft, ChevronRight, Download, Save, Share2, Sparkles } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Download, Share2, Sparkles } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { InviteData } from '@/app/context/AppContext';
 import InviteCard from '@/app/components/InviteCard';
