@@ -42,6 +42,12 @@ jobs:
       - name: Copy staticwebapp.config.json
         run: cp staticwebapp.config.json dist/
 
+      - name: Hide source index.html to prevent conflicts
+        run: |
+          if [ -f index.html ]; then
+            mv index.html index.html.source
+          fi
+
       - name: Verify build output
         run: |
           echo "Checking dist folder contents:"
@@ -60,6 +66,13 @@ jobs:
           api_location: ""
           output_location: "dist"
           skip_app_build: true
+
+      - name: Restore source index.html
+        if: always()
+        run: |
+          if [ -f index.html.source ]; then
+            mv index.html.source index.html
+          fi
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
