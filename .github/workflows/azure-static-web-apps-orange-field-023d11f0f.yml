@@ -28,6 +28,9 @@ jobs:
       - name: Enable Corepack
         run: corepack enable
 
+      - name: Configure Yarn registry
+        run: yarn config set registry https://registry.npmjs.org/
+
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
