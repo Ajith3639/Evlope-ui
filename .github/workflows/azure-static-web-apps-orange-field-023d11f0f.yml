@@ -26,12 +26,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: 'npm'
 
       - name: Install dependencies
         run: |
-          npm install --no-audit --no-fund --prefer-offline --legacy-peer-deps
+          npm ci --legacy-peer-deps
         env:
-          npm_config_maxsockets: 3
+          NODE_OPTIONS: "--max-old-space-size=8192"
 
       - name: Build
         run: npm run build
